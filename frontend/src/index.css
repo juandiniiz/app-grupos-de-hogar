@@ -1,0 +1,56 @@
+@import 'leaflet/dist/leaflet.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background font-roboto text-dark;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-primary rounded-button px-[30px] py-[11px] text-white font-bold uppercase text-base leading-[18px] shadow-card transition-opacity hover:opacity-90 active:opacity-80;
+  }
+
+  .btn-outline {
+    @apply rounded-button px-[20px] py-[11px] text-primary underline font-bold uppercase text-base leading-[18px] transition-opacity hover:opacity-70;
+  }
+
+  .btn-danger {
+    @apply text-red underline font-bold text-sm transition-opacity hover:opacity-70;
+  }
+
+  .card {
+    @apply bg-white rounded-card shadow-card p-4;
+  }
+
+  .input-field {
+    @apply w-full border border-grey rounded-[8px] px-4 py-3 text-sm text-dark placeholder-grey-dark focus:outline-none focus:border-primary transition-colors;
+  }
+
+  .badge-responsable {
+    @apply rounded-badge px-[6px] py-[2px] font-bold text-sm bg-grey text-dark;
+  }
+
+  .badge-supervisor {
+    @apply rounded-badge px-[6px] py-[2px] font-bold text-sm bg-grey text-dark;
+  }
+
+  .badge-nuevo {
+    @apply rounded-badge px-[6px] py-[2px] font-bold text-sm bg-yellow text-dark;
+  }
+
+  .badge-sin-grupo {
+    @apply rounded-badge px-[6px] py-[2px] font-bold text-sm bg-red text-white;
+  }
+
+  .badge-grupo {
+    @apply rounded-badge px-[6px] py-[2px] font-bold text-sm bg-blue-group text-dark;
+  }
+
+  .section-title {
+    @apply text-[30px] font-bold text-dark;
+  }
+}
