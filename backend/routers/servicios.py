@@ -7,6 +7,21 @@ import models, schemas, auth as auth_utils
 router = APIRouter(prefix="/servicios", tags=["servicios"])
 
 
+def build_servicio_out(s: models.Servicio) -> dict:
+    return {
+        **{c.name: getattr(s, c.name) for c in s.__table__.columns},
+        "integrantes": [
+            {
+                "id": si.integrante.id,
+                "nombre": si.integrante.nombre,
+                "apellidos": si.integrante.apellidos,
+            }
+            for si in s.integrantes
+            if si.integrante
+        ],
+    }
+
+
 @router.get("", response_model=List[schemas.ServicioOut])
 def list_servicios(
     integrante_id: Optional[int] = None,
@@ -19,7 +34,7 @@ def list_servicios(
             models.ServicioIntegrante.integrante_id == integrante_id
         ).subquery()
         query = query.filter(models.Servicio.id.in_(ids))
-    return query.order_by(models.Servicio.fecha.desc()).all()
+    return [build_servicio_out(s) for s in query.order_by(models.Servicio.fecha.desc()).all()]
 
 
 @router.get("/{servicio_id}", response_model=schemas.ServicioOut)
@@ -31,7 +46,7 @@ def get_servicio(
     s = db.query(models.Servicio).filter(models.Servicio.id == servicio_id).first()
     if not s:
         raise HTTPException(status_code=404, detail="No encontrado")
-    return s
+    return build_servicio_out(s)
 
 
 @router.post("", response_model=schemas.ServicioOut, status_code=201)
@@ -44,7 +59,7 @@ def create_servicio(
     db.add(s)
     db.commit()
     db.refresh(s)
-    return s
+    return build_servicio_out(s)
 
 
 @router.put("/{servicio_id}", response_model=schemas.ServicioOut)
@@ -61,7 +76,7 @@ def update_servicio(
         setattr(s, k, v)
     db.commit()
     db.refresh(s)
-    return s
+    return build_servicio_out(s)
 
 
 @router.delete("/{servicio_id}", status_code=204)
