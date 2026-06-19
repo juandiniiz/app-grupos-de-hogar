@@ -19,8 +19,14 @@ export default function Login() {
       const me = await getMe()
       localStorage.setItem('user', JSON.stringify(me.data))
       navigate('/')
-    } catch {
-      setError('Email o contraseña incorrectos. Inténtalo de nuevo.')
+    } catch (err: any) {
+      if (!err.response) {
+        setError('No se puede conectar al servidor. Verifica que el backend está corriendo en localhost:8000.')
+      } else if (err.response.status === 401) {
+        setError('Email o contraseña incorrectos.')
+      } else {
+        setError(`Error ${err.response.status}: ${err.response.data?.detail ?? 'Error desconocido'}`)
+      }
     } finally {
       setLoading(false)
     }
