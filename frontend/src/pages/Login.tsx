@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { login } from '../lib/api'
+import { login, getMe } from '../lib/api'
 
 export default function Login() {
   const navigate = useNavigate()
@@ -16,9 +16,7 @@ export default function Login() {
     try {
       const res = await login(email, password)
       localStorage.setItem('token', res.data.access_token)
-      // Fetch user profile
-      const { default: api } = await import('../lib/api')
-      const me = await api.get('/auth/me')
+      const me = await getMe()
       localStorage.setItem('user', JSON.stringify(me.data))
       navigate('/')
     } catch {
