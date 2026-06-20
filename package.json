@@ -1,0 +1,24 @@
+{
+  "name": "app-igreja",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/juandiniiz/app-grupos-de-hogar.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/juandiniiz/app-grupos-de-hogar/issues"
+  },
+  "homepage": "https://github.com/juandiniiz/app-grupos-de-hogar#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.0"
+  }
+}
